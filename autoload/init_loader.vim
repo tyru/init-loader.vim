@@ -40,14 +40,12 @@ function! init_loader#init(dir) "{{{
         return
     endif
 
-    for script in s:glob_init_scripts(a:dir.'/*')
+    let got_files = split(glob(a:dir . '/*'), '\n')
+    let script_pattern = '\.vim$'
+    let scripts = filter(got_files, 'v:val =~# script_pattern')
+    for script in scripts
         source `=script`
     endfor
-endfunction " }}}
-
-function! s:glob_init_scripts(pattern) "{{{
-    let filename_pattern = '\.vim$'
-    return filter(split(glob(a:pattern), '\n'), 'v:val =~# filename_pattern')
 endfunction " }}}
 
 
